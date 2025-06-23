@@ -10,10 +10,7 @@ import com.yupi.cityoj.common.ResultUtils;
 import com.yupi.cityoj.constant.UserConstant;
 import com.yupi.cityoj.exception.BusinessException;
 import com.yupi.cityoj.exception.ThrowUtils;
-import com.yupi.cityoj.model.dto.question.QuestionAddRequest;
-import com.yupi.cityoj.model.dto.question.QuestionEditRequest;
-import com.yupi.cityoj.model.dto.question.QuestionQueryRequest;
-import com.yupi.cityoj.model.dto.question.QuestionUpdateRequest;
+import com.yupi.cityoj.model.dto.question.*;
 import com.yupi.cityoj.model.entity.Question;
 import com.yupi.cityoj.model.entity.User;
 import com.yupi.cityoj.model.vo.QuestionVO;
@@ -63,6 +60,14 @@ public class QuestionController {
         List<String> tags = questionAddRequest.getTags();
         if (tags != null) {
             question.setTags(JSONUtil.toJsonStr(tags));
+        }
+        List<JudgeCase> judgeCase = questionAddRequest.getJudgeCase();
+        JudgeConfig judgeConfig = questionAddRequest.getJudgeConfig();
+        if(judgeCase!=null) {
+            question.setJudgeConfig(JSONUtil.toJsonStr(judgeConfig));
+        }
+        if(judgeCase!=null) {
+            question.setJudgeCase(JSONUtil.toJsonStr(judgeCase));
         }
         questionService.validQuestion(question, true);
         User loginUser = userService.getLoginUser(request);
